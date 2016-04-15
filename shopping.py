@@ -1,43 +1,12 @@
-def get_order():
-    print("[command] [item] (command is a to add, d to delete, q to quit)")
-    line =  input()
+import sales.shopping_cart, sales.shopping_order
 
-    command = line[:1]
-    item = line[2:]
+cart = sales.shopping_cart.Cart()
+order = sales.shopping_order.Order()
+order.get_input()
 
-    return command, item
+while not order.quit:
+    cart.process(order)
+    order = sales.shopping_order.Order()
+    order.get_input()
 
-def add_to_cart(item, cart):
-    if not item in cart:
-        cart[item] = 0
-    cart[item] += 1
-
-def delete_from_cart(item, cart):
-    if item in cart:
-        cart[item] -= 1
-        if len(cart) == 0:
-    
-def process_order(order, cart):
-    command, item = order
-
-    if command == "a":
-        add_to_cart(item, cart)
-    elif command == "d" and item in cart:
-        delete_from_cart(item, cart)
-    elif command == "q":
-        return False
-
-    return True
-    
-def go_shopping():
-    cart = dict()
-
-    while True:
-        order = get_order()
-        if not process_order(order, cart):
-            break
-        
-    print(cart)
-    print("Finished!")
-
-go_shopping()
+print(cart)
